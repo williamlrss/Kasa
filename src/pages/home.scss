@@ -1,0 +1,11 @@
+@import '../sass/base/reset';
+
+body {
+	margin: 0 10%;
+}
+
+.home {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+}

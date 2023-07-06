@@ -1,0 +1,31 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+@import '../utils/placeholders';
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+* {
+	padding-inline-start: unset;
+	text-decoration: none;
+	list-style: none;
+	font-family: 'Montserrat', sans-serif;
+	margin: unset;
+	font-size: 24px;
+	font-weight: 500;
+}
+
+body {
+	max-width: 1440px;
+	padding-top: 40px;
+}
+
+a {
+	cursor: pointer;
+	z-index: 100; // necessary for card links for example
+	color: $main-color;
+	text-decoration: unset;
+}
+
+i {
+	font-style: unset;
+}
