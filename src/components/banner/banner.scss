@@ -6,9 +6,10 @@
 	// height: 223px;
 	overflow: hidden;
 	border-radius: 25px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	// display: flex;
+	// align-items: center;
+	// justify-content: center;
+	@include flex();
 	color: darken(black, 30%);
 	aspect-ratio: 6/1;
 
@@ -16,6 +17,7 @@
 		object-fit: cover;
 		filter: brightness(0.7);
 		width: 100%;
+		height: auto;
 	}
 
 	&__title {
@@ -24,7 +26,7 @@
 
 		& h1 {
 			position: absolute;
-			font-size: clamp(12px, 4vw, 48px);
+			font-size: clamp(0.5rem, 2vw, 1.5rem);
 		}
 	}
 }

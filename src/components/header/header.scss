@@ -2,7 +2,23 @@
 @import '../../sass/utils/placeholders';
 
 .header {
-	width: 100%;
+	width: auto;
 	height: 68px;
 	@extend %flex-between;
+
+	&__logo {
+		max-height: max-content;
+		scale: 1;
+		transition: 0.3s ease-out;
+
+		&:hover {
+			filter: drop-shadow(0 -2px 1px grey);
+			transform: scale(0.95);
+		}
+	}
+
+	// &__logo:hover {
+	// 	// box-shadow: 0 2px 8px black;
+
+	// }
 }
