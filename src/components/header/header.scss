@@ -1,24 +1,59 @@
 @import '../../sass/main.scss';
 @import '../../sass/utils/placeholders';
 
-.header {
-	width: auto;
-	height: 68px;
-	@extend %flex-between;
-
-	&__logo {
-		max-height: max-content;
-		scale: 1;
-		transition: 0.3s ease-out;
-
-		&:hover {
-			filter: drop-shadow(0 -2px 1px grey);
-			transform: scale(0.95);
-		}
+@keyframes doorOpening {
+	0% {
+		transform: rotateY(0deg);
 	}
 
-	// &__logo:hover {
-	// 	// box-shadow: 0 2px 8px black;
+	70% {
+		transform: rotateY(-180deg);
+		left: 32px;
+		bottom: -8px;
+	}
 
-	// }
+	100% {
+		transform: rotateY(0deg);
+	}
+}
+
+.header {
+	width: 100%;
+	height: auto;
+	@extend %flex-between;
+
+	&-logo {
+		position: relative;
+		max-width: 40%;
+		display: flex;
+		@include flex(row, space-between, flex-end);
+
+		&__item {
+			position: relative;
+			@include flex;
+			width: 30px;
+			height: 30px;
+
+			&--home {
+				height: inherit;
+				transform: translateY(6px);
+			}
+
+			&--door {
+				width: 4px;
+				position: absolute;
+				left: 19px;
+				bottom: -6px;
+				animation: doorOpening 0.8s both ease-out; // use keyframes to define the animation
+			}
+
+			&--small {
+				height: 25px;
+			}
+		}
+
+		&:hover &__item--door {
+			animation-name: doorOpening; // trigger the animation when active
+		}
+	}
 }

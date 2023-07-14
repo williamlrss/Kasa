@@ -1,22 +1,23 @@
 @import '../../sass/main.scss';
 
 .gallery {
-	padding: 50px;
 	background-color: $main-grey;
 	border-radius: 25px;
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-	gap: 50px;
+	grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+	gap: 20px;
 	justify-content: center;
 	align-items: center;
 
-	@media screen and (max-width: 768px) {
+	@media screen and (max-width: 900px) {
+		margin-top: 10px;
 		grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-		padding: 40px;
-		gap: 40px;
+		gap: 30px;
 	}
 
-	@media screen and (max-width: 576px) {
-		grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); // 1 card per row
+	@media screen and (min-width: 900px) {
+		grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+		padding: 50px;
+		gap: 50px;
 	}
 }

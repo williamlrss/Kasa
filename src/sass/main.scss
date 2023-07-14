@@ -2,3 +2,24 @@
 @import 'utils/variables';
 @import 'utils/mixins';
 @import 'utils/placeholders';
+
+.main {
+	// Apply main pages margins
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	@media screen and (min-width: 768px) {
+		gap: 20px;
+	}
+
+	@media screen and (min-width: 900px) {
+		gap: 60px;
+	}
+
+	&-pages {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+}

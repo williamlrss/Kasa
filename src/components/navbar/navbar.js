@@ -5,17 +5,21 @@ export default function Navbar() {
 	const location = useLocation();
 
 	const getNavClass = (path) => {
-		return location.pathname === path ? 'nav__list__item-active' : 'nav__list__item';
+		return location.pathname === path ? 'nav-list-li-active' : 'nav-list-li';
 	};
 
 	return (
-		<nav className='nav'>
-			<ul className='nav__list'>
+		<nav>
+			<ul className='nav-list'>
 				<li className={getNavClass('/Kasa/')}>
-					<Link to='/Kasa/'>Accueil</Link>
+					<Link className='nav-list-li__item nav-list-li__item--home' to='/Kasa/'>
+						Accueil
+					</Link>
 				</li>
 				<li className={getNavClass('/about')}>
-					<Link to='/about'>A propos</Link>
+					<Link className='nav-list-li__item' to='/about'>
+						A propos
+					</Link>
 				</li>
 			</ul>
 		</nav>

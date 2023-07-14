@@ -1,0 +1,92 @@
+@import '../../sass/main.scss';
+
+.content {
+	@include flex(column, center, flex-start);
+	gap: 10px;
+
+	@media screen and (min-width: 900px) {
+		@include flex(row, space-between);
+	}
+
+	&-heading {
+		@include flex(column, center, flex-start);
+		gap: 10px;
+		color: $main-color;
+
+		&__title {
+			// font-size: clamp(18px, 1vw, 36px);
+			font-size: 18px;
+		}
+
+		&__location {
+			// font-size: clamp(14px, 1vw, 18px);
+			font-size: 14px;
+		}
+
+		&-tags {
+			@include flex(row, flex-start);
+			flex-wrap: wrap;
+			gap: 10px;
+
+			&__item {
+				text-align: center;
+				color: white;
+				border-radius: 5px;
+				background-color: $main-color;
+				width: fit-content;
+				height: 18px;
+				padding-top: 1px;
+				padding-inline: 30px;
+				font-size: clamp(10px, 1vw, 14px);
+
+				@media screen and (min-width: 900px) {
+					width: 115px;
+					height: 25px;
+				}
+			}
+		}
+	}
+
+	&-aside {
+		@media screen and (min-width: 900px) {
+			@include flex(column-reverse);
+			width: unset;
+		}
+
+		&-rating {
+			@include flex;
+			gap: 5px;
+
+			&__item svg {
+				width: 13px;
+				height: 13px;
+			}
+		}
+		width: 100%;
+		@include flex(row, space-between);
+
+		&-host {
+			@include flex;
+			gap: 10px;
+
+			&-name__text {
+				font-size: 12px;
+
+				@media screen and (min-width: 900px) {
+					font-size: 18px;
+				}
+			}
+
+			&__picture {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+
+				@media screen and (min-width: 900px) {
+					width: 64px;
+					height: 64px;
+				}
+			}
+		}
+	}
+}

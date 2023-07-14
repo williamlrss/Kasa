@@ -1,32 +1,30 @@
 @import '../../sass/main.scss';
 
-.nav {
+.nav-list {
 	height: 100%;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 
-	&__list {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		gap: 50px;
-
-		&__items {
-			width: 140px;
-			height: 100%;
-			display: flex;
-		}
+	@media screen and (min-width: 768px) {
+		gap: 30px;
 	}
 
-	a {
+	@media screen and (min-width: 900px) {
+		gap: 50px;
+	}
+
+	&-li__item {
 		height: 100%;
 		width: 100%;
 		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: clamp(12px, 2vw, 24px);
+		font-size: clamp(0.75rem, 2vw, 1.5rem);
 	}
 
-	a::after {
+	&-li__item::after {
 		content: '';
 		position: absolute;
 		bottom: 0;
@@ -37,7 +35,7 @@
 		transition-duration: 0.3s;
 	}
 
-	a:hover:after {
+	&-li__item:hover:after {
 		transform: scale(1);
 	}
 }

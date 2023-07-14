@@ -5,7 +5,7 @@ import './card.scss';
 
 const Card = ({ id, title = 'Cover Image', cover }) => {
 	return (
-		<Link to={`/accomodation/${id}`} className='gallery__card'>
+		<Link to={`/accommodation/${id}`} className='gallery__card'>
 			<img className='gallery__card-img' src={cover} alt={title} />
 			<h3 className='gallery__card-title'>{title}</h3>
 		</Link>

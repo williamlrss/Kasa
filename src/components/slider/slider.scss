@@ -1,0 +1,70 @@
+@import '../../sass/main.scss';
+
+.slider {
+	position: relative;
+	@include flex(row, space-between);
+	aspect-ratio: 4/3;
+	border-radius: 25px;
+	background-position: center;
+	background-size: cover;
+
+	@media screen and (min-width: 900px) {
+		aspect-ratio: 3/1;
+	}
+
+	&__arrow {
+		position: relative;
+		width: 20px;
+		cursor: pointer;
+		transition: 0.1s;
+
+		@media screen and (min-width: 768px) {
+			width: 30px;
+		}
+
+		@media screen and (min-width: 900px) {
+			width: inherit;
+		}
+		&:hover {
+			filter: drop-shadow(0 4px 1px $main-color);
+		}
+
+		&:active {
+			transition: cubic-bezier(0.38, 0.62, 0.72, 0.99) forwards;
+		}
+
+		&--backward {
+			left: 25px;
+			transition-duration: 0.4s;
+
+			&:active {
+				left: 20px;
+			}
+		}
+		&--forward {
+			right: 25px;
+			transition-duration: 0.4s;
+
+			&:active {
+				right: 20px;
+			}
+		}
+	}
+
+	.slideCount {
+		position: absolute;
+		left: 50%;
+		bottom: 10px;
+		color: white;
+		font-size: clamp(0.5em, 1vw, 1vw);
+		letter-spacing: -1px;
+
+		@media screen and (min-width: 768px) {
+			bottom: 20px;
+		}
+
+		@media screen and (min-width: 900px) {
+			bottom: 25px;
+		}
+	}
+}

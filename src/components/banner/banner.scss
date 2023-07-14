@@ -2,16 +2,18 @@
 
 .banner {
 	position: relative;
-	width: 100%;
-	// height: 223px;
 	overflow: hidden;
-	border-radius: 25px;
-	// display: flex;
-	// align-items: center;
-	// justify-content: center;
+	border-radius: 15px;
 	@include flex();
-	color: darken(black, 30%);
-	aspect-ratio: 6/1;
+	aspect-ratio: 3/1;
+
+	@media screen and (min-width: 768px) {
+		aspect-ratio: 4/1;
+	}
+
+	@media screen and (min-width: 1100px) {
+		aspect-ratio: 6/1;
+	}
 
 	&__img {
 		object-fit: cover;
@@ -21,12 +23,9 @@
 	}
 
 	&__title {
-		display: contents;
+		position: absolute;
+		padding-inline: 5%;
 		color: white;
-
-		& h1 {
-			position: absolute;
-			font-size: clamp(0.5rem, 2vw, 1.5rem);
-		}
+		font-size: clamp(1rem, 4vw, 2rem);
 	}
 }
