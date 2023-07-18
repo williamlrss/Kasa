@@ -20,28 +20,6 @@ button {
 	padding: unset;
 }
 
-@media screen and (max-width: 768px) {
-	body {
-		margin-top: 10px;
-		margin-inline: 10px;
-	}
-}
-
-@media screen and (max-width: 900px) {
-	body {
-		margin-top: 25px;
-		margin-inline: 6%;
-	}
-}
-
-@media screen and (min-width: 900px) {
-	body {
-		margin-top: 40px;
-		margin-inline: 10%;
-		max-width: 1440px;
-	}
-}
-
 a {
 	cursor: pointer;
 	z-index: 100; // necessary for card links for example
@@ -51,4 +29,8 @@ a {
 
 i {
 	font-style: unset;
+}
+
+footer {
+	margin-top: auto;
 }

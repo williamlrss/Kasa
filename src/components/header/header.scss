@@ -1,7 +1,7 @@
 @import '../../sass/main.scss';
 @import '../../sass/utils/placeholders';
 
-@keyframes doorOpening {
+@keyframes doorOpening--small {
 	0% {
 		transform: rotateY(0deg);
 	}
@@ -17,6 +17,38 @@
 	}
 }
 
+@keyframes doorOpening--medium {
+	0% {
+		transform: rotateY(0deg);
+	}
+
+	70% {
+		transform: rotateY(-180deg);
+		left: 42px;
+		bottom: -12px;
+	}
+
+	100% {
+		transform: rotateY(0deg);
+	}
+}
+
+// @keyframes doorOpening--large {
+// 	0% {
+// 		transform: rotateY(0deg);
+// 	}
+
+// 	70% {
+// 		transform: rotateY(-180deg);
+// 		left: 60px;
+// 		bottom: -16px;
+// 	}
+
+// 	100% {
+// 		transform: rotateY(0deg);
+// 	}
+// }
+
 .header {
 	width: 100%;
 	height: auto;
@@ -25,14 +57,24 @@
 	&-logo {
 		position: relative;
 		max-width: 40%;
-		display: flex;
 		@include flex(row, space-between, flex-end);
 
 		&__item {
 			position: relative;
 			@include flex;
-			width: 30px;
-			height: 30px;
+			width: calc(15px + 1.5625vw);
+			height: calc(15px + 1.5625vw);
+			transition: 0.1s ease-in-out;
+
+			// @media screen and (min-width: 600px) {
+			// 	width: 45px;
+			// 	height: 45px;
+			// }
+
+			// @media screen and (min-width: 900px) {
+			// 	width: 60px;
+			// 	height: 60px;
+			// }
 
 			&--home {
 				height: inherit;
@@ -44,16 +86,46 @@
 				position: absolute;
 				left: 19px;
 				bottom: -6px;
-				animation: doorOpening 0.8s both ease-out; // use keyframes to define the animation
+				animation: doorOpening--small 0.8s both ease-out; // use keyframes to define the animation
+
+				@media screen and (min-width: 600px) {
+					width: auto;
+					height: 15px;
+					left: 28px;
+					bottom: -2px;
+					animation: doorOpening--medium 0.8s both ease-out;
+				}
+
+				// @media screen and (min-width: 900px) {
+				// 	height: 18px;
+				// 	left: 37px;
+				// 	bottom: 2px;
+				// 	animation: doorOpening--large 0.8s both ease-out;
+				// }
 			}
 
 			&--small {
-				height: 25px;
+				height: calc(10px + 1.5625vw);
+
+				// @media screen and (min-width: 600px) {
+				// 	height: 40px;
+				// }
+
+				// @media screen and (min-width: 900px) {
+				// 	height: 50px;
+				// }
 			}
 		}
 
-		&:hover &__item--door {
-			animation-name: doorOpening; // trigger the animation when active
+		&:active &__item--door {
+			animation-name: doorOpening--small; // trigger the animation when active
+			// @media screen and (max-width: 600px) {
+			// 	animation-name: doorOpening;
+			// }
+
+			@media screen and (min-width: 600px) {
+				animation-name: doorOpening--Medium;
+			}
 		}
 	}
 }

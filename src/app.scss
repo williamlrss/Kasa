@@ -1,0 +1,14 @@
+@import './sass/main.scss';
+
+.app-display-rules {
+	margin-top: calc(15px + 2vw);
+	margin-inline: calc(30px + 3vw);
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh; // full screen size
+	gap: calc(20px + 1.5625vw);
+}
+
+app-router {
+	@extend .app-display-rules;
+}

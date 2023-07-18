@@ -1,18 +1,84 @@
 @import '../../sass/main.scss';
 
-.collapse {
+.dropDownEl {
 	background-color: $main-grey;
-	max-width: 1100px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	margin: 0 auto;
-	&_title {
+	width: 100%;
+	border-radius: 0 0 10px 10px;
+
+	&-button {
+		cursor: pointer;
+		background-color: $main-color;
+		border-radius: 5px;
+		color: white;
+		@include flex(row, space-between);
+		width: 100%;
+		padding: 5px 10px;
+
+		&__title {
+			font-size: 13px;
+
+			@media screen and (min-width: 900px) {
+				font-size: 18px;
+			}
+		}
+
+		&__arrow {
+			transition: all 0.2s ease-in-out;
+			@media screen and (max-width: 1230px) {
+				width: 12px;
+			}
+
+			&--up {
+				transform: scaleY(-1);
+				transition: 0.3s;
+			}
+
+			&--down {
+				transform: scaleY(1);
+				transition: 0.3s;
+			}
+		}
+		.arrow_up {
+			transform: rotate(0deg);
+		}
+		.arrow_down {
+			transform: rotate(180deg);
+		}
+	}
+
+	&-content {
+		padding: 20px 10px;
+		visibility: visible;
+		opacity: 1;
+		height: auto;
+		transition: 0.2s ease-in-out;
+
+		&--hidden {
+			visibility: hidden;
+			opacity: 0;
+			height: 0;
+			transition: 0.2s ease-out;
+		}
+
+		&__text {
+			color: $main-color;
+			font-size: 12px;
+			line-height: 16px;
+
+			@media screen and (min-width: 900px) {
+				font-size: 18px;
+				line-height: 26px;
+			}
+		}
+	}
+
+	&__title {
 		@include flex(row, space-between, center);
 		background-color: $main-color;
 		color: white;
 		border-radius: 10px;
 		font-weight: 500;
-		font-size: clamp(13px, 2vw, 18px);
+		font-size: 13px;
 		padding: 10px 15px;
 		cursor: pointer;
 		.arrow {
@@ -28,6 +94,7 @@
 			transform: rotate(180deg);
 		}
 	}
+
 	&_content {
 		display: flex;
 		flex-direction: column;
@@ -42,28 +109,10 @@
 		color: $main-color;
 		transition: visibility 0.5s ease-in-out, opacity 0.5s ease-in-out, height 0.2s ease-in-out;
 	}
+
 	&_content_hidden {
 		visibility: hidden;
 		opacity: 0;
 		height: 0;
-	}
-}
-
-.accomodation_collapse {
-	display: flex;
-	justify-content: space-between;
-	gap: 70px;
-	margin: 30px auto;
-	width: 95%;
-	&_item {
-		width: 50%;
-	}
-	@media screen and (max-width: 650px) {
-		flex-direction: column;
-		gap: 20px;
-		margin: 20px auto;
-		&_item {
-			width: 100%;
-		}
 	}
 }

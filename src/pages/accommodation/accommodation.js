@@ -1,17 +1,17 @@
-import './accommodation.scss'; // IF EMPTY REPLACE PER MAIN
+import './accommodation.scss';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Header from '../../components/header/header';
+import { useParams, useNavigate } from 'react-router-dom';
 import Slider from '../../components/slider/slider';
-import Footer from '../../components/footer/footer';
-import Collapse from '../../components/dropDownEl/dropDownEl';
+import DropDownEl from '../../components/dropDownEl/dropDownEl';
 import { ReactComponent as GreyStar } from '../../assets/grey_star.svg';
 import { ReactComponent as RedStar } from '../../assets/red_star.svg';
 
 export default function Accommodation() {
 	const [dataCurrentAccommodation, setDataCurrentAccommodation] = useState({});
+	const [error, setError] = useState(false);
 
 	const { id: idAccommodation } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetch('http://localhost:3000/accommodation.json')
@@ -23,72 +23,103 @@ export default function Accommodation() {
 			})
 			.then((data) => {
 				const currentAccommodation = data.find((data) => data.id === idAccommodation);
-				setDataCurrentAccommodation(currentAccommodation || {});
+				if (currentAccommodation) {
+					setDataCurrentAccommodation(currentAccommodation);
+				} else {
+					setError(true);
+				}
 			})
-			.catch((error) => console.error(`Fetch error: ${error}`));
+			.catch((error) => {
+				console.error(`Fetch error: ${error}`);
+				setError(true);
+			});
 	}, [idAccommodation]);
 
-	if (!dataCurrentAccommodation.host) {
-		return null;
+	if (error) {
+		navigate('*');
 	}
+	// if (!dataCurrentAccommodation.host) {
+	// 	return null;
+	// 	// return <NotFound />;
+	// }
 
 	const name = dataCurrentAccommodation.host.name.split(' ');
 	const rating = dataCurrentAccommodation.rating;
-	const description = dataCurrentAccommodation[0].description;
-	console.log(description);
-	const equipments = dataCurrentAccommodation[0].equipments;
-
-	console.log(rating);
-	console.log(RedStar, GreyStar);
+	const description = dataCurrentAccommodation.description;
+	const equipments = dataCurrentAccommodation.equipments;
 	return (
 		<div className='main-pages'>
-			<Header />
 			<Slider imageSlider={dataCurrentAccommodation.pictures || []} />
-			<main className='accommodation'>
-				<div className='content'>
-					<div className='content-heading'>
-						<h1 className='content-heading__title'>{dataCurrentAccommodation.title}</h1>
-						<p className='content-heading__location'>{dataCurrentAccommodation.location}</p>
-						<div className='content-heading-tags'>
-							{dataCurrentAccommodation.tags.map((tag, index) => {
-								return (
-									<button className='content-heading-tags__item' key={index}>
-										{tag}
-									</button>
-								);
-							})}
-						</div>
-					</div>
-					<div className='content-aside'>
-						<div className='content-aside-rating'>
-							{[...Array(5)].map((star, index) => {
-								const ratingValue = index + 1;
-								return (
-									<div className='content-aside-rating__item' data-key={index}>
-										{ratingValue <= rating ? <RedStar /> : <GreyStar />}
-									</div>
-								);
-							})}
-						</div>
-						<div className='content-aside-host'>
-							<div className='content-aside-host-name'>
-								<p className='content-aside-host-name__text'>{name[0]}</p>
-								<p className='content-aside-host-name__text'>{name[1]}</p>
-							</div>
-							<img className='content-aside-host__picture' src={dataCurrentAccommodation.host.picture} alt='host_profile_picture' />
-						</div>
+			<article className='content'>
+				<div className='content-heading'>
+					<h1 className='content-heading__title'>{dataCurrentAccommodation.title}</h1>
+					<p className='content-heading__location'>{dataCurrentAccommodation.location}</p>
+					<div className='content-heading-tags'>
+						{dataCurrentAccommodation.tags.map((tag, index) => {
+							return (
+								<button className='content-heading-tags__item' key={index}>
+									{tag}
+								</button>
+							);
+						})}
 					</div>
 				</div>
-				<div className='accomodation_collapse'>
-					<div className='accomodation_collapse_item'>
-						<Collapse title={'Description'} content={description} />
+				<div className='content-aside'>
+					<div className='content-aside-rating'>
+						{[...Array(5)].map((star, index) => {
+							const ratingValue = index + 1;
+							return (
+								<div className='content-aside-rating__item' data-key={index}>
+									{ratingValue <= rating ? <RedStar /> : <GreyStar />}
+								</div>
+							);
+						})}
 					</div>
-					<div className='accomodation_collapse_item'>
-						<Collapse title={'Équipements'} content={equipments} />
+					<div className='content-aside-host'>
+						<div className='content-aside-host-name'>
+							<p className='content-aside-host-name__text'>{name[0]}</p>
+							<p className='content-aside-host-name__text'>{name[1]}</p>
+						</div>
+						<img className='content-aside-host__picture' src={dataCurrentAccommodation.host.picture} alt='host_profile_picture' />
 					</div>
 				</div>
-			</main>
-			<Footer />
+			</article>
+			<div className='content-dropDownEls'>
+				<DropDownEl title={'Description'} content={[`${description}`]} />
+				<DropDownEl title={'Équipements'} content={equipments} />
+			</div>
 		</div>
 	);
 }
+
+/* <main className='main-pages'>
+  <Slider imageSlider={dataCurrentAccommodation.pictures || []} />
+  <article className='content'>
+    <header className='content-heading'>
+      <h1 className='content-heading__title'>{dataCurrentAccommodation.title}</h1>
+      <p className='content-heading__location'>{dataCurrentAccommodation.location}</p>
+      <div className='content-heading-tags'>
+        {dataCurrentAccommodation.tags.map((tag, index) => (
+          <button className='content-heading-tags__item' key={index}>
+            {tag}
+          </button>
+        ))}
+      </div>
+    </header>
+    <aside className='content-aside'>
+      <RatingStar rating={rating} />
+      <figure className='content-aside-host'>
+        <figcaption className='content-aside-host-name'>
+          <p className='content-aside-host-name__text'>{name[0]}</p>
+          <p className='content-aside-host-name__text'>{name[1]}</p>
+        </figcaption>
+        <img className='content-aside-host__picture' src={dataCurrentAccommodation.host.picture} alt='host_profile_picture' />
+      </figure>
+    </aside>
+  </article>
+  <div className='content-dropDownEls'>
+    <DropDownEl title={'Description'} content={[`${description}`]} />
+    <DropDownEl title={'Équipements'} content={equipments} />
+  </div>
+</main>
+<Footer /> */

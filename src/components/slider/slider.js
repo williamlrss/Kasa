@@ -19,10 +19,7 @@ export default function Slider({ imageSlider }) {
 			{imageSlider.length > 1 && (
 				<>
 					<img className='slider__arrow slider__arrow--backward' src={ArrowLeft} alt='icon_arrow_backward' onClick={prevSlide} />
-					{/* IoIosArrowBack */}
 					<img className='slider__arrow slider__arrow--forward' src={ArrowRight} alt='icon_arrow_forward' onClick={nextSlide} />
-					{/* IoIosArrowForward */}
-
 					<p className='slideCount'>
 						{currentIndex + 1} / {imageSlider.length}
 					</p>

@@ -3,25 +3,31 @@ import arrow from '../../assets/arrow.svg'; // Assuming you replaced PNG with SV
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function Collapse({ title, content }) {
+export default function DropDownEl({ title, content }) {
 	const [toggle, setToggle] = useState(false);
 
 	return (
-		<div className='collapse'>
-			<button className='collapse_title' onClick={() => setToggle((prevToggle) => !prevToggle)}>
-				<h3>{title}</h3>
-				<img className={toggle ? 'arrow arrow_up' : 'arrow arrow_down'} src={arrow} alt='show content' />
+		<div className='dropDownEl'>
+			<button className='dropDownEl-button' onClick={() => setToggle((prevToggle) => !prevToggle)}>
+				<h3 className='dropDownEl-button__title'>{title}</h3>
+				<img
+					className={toggle ? 'dropDownEl-button__arrow dropDownEl-button__arrow--up' : 'dropDownEl-button__arrow dropDownEl-button__arrow--down'}
+					src={arrow}
+					alt='show content'
+				/>
 			</button>
-			<div className={toggle ? 'collapse_content' : 'collapse_content_hidden'}>
+			<div className={toggle ? 'dropDownEl-content' : 'dropDownEl-content--hidden'}>
 				{content.map((item, index) => (
-					<p key={index}>{item}</p>
+					<p className='dropDownEl-content__text' key={index}>
+						{item}
+					</p>
 				))}
 			</div>
 		</div>
 	);
 }
 
-Collapse.propTypes = {
+DropDownEl.propTypes = {
 	title: PropTypes.string.isRequired,
 	content: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

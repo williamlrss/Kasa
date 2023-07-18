@@ -1,9 +1,6 @@
 import './gallery.scss';
 import React, { useState, useEffect } from 'react';
-// import accommodations from '../../data/accommodation.json';
 import Card from './../card/card';
-
-// fetch 3000/ Acc.json
 
 const Gallery = () => {
 	const [accommodations, setAccommodations] = useState([]);

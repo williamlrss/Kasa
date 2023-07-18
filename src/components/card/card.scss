@@ -17,12 +17,12 @@
 	&-title {
 		z-index: 11;
 		position: absolute;
-		font-size: clamp(0.75rem, 2vw, 18px);
 		font-weight: 500;
 		bottom: 20px;
 		left: 20px;
 		right: 20px;
 		color: #fff;
+		font-size: 18px;
 	}
 
 	&::after {

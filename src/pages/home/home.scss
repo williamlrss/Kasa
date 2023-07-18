@@ -1,11 +1,11 @@
 @import '../../sass/main.scss';
 
-// body {
-// 	margin: 0 10%;
-// }
-
-.home {
+.home-page {
 	display: flex;
 	flex-direction: column;
-	gap: 60px;
+	gap: calc(10px + 2vw);
+}
+
+home-page {
+	@extend .home-page;
 }

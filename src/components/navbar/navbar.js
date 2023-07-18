@@ -1,27 +1,39 @@
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './navbar.scss';
 
-export default function Navbar() {
+function Navbar() {
 	const location = useLocation();
+	const [activeLink, setActiveLink] = useState(() => (location.pathname === '/' || location.pathname === '/kasa' ? '/kasa' : location.pathname));
 
-	const getNavClass = (path) => {
-		return location.pathname === path ? 'nav-list-li-active' : 'nav-list-li';
-	};
+	const navLinks = [
+		{ name: 'Home', path: '/kasa' },
+		{ name: 'About', path: '/about' },
+	];
+
+	useEffect(() => {
+		setActiveLink(location.pathname === '/' || location.pathname === '/kasa' ? '/kasa' : location.pathname);
+	}, [location]);
 
 	return (
 		<nav>
 			<ul className='nav-list'>
-				<li className={getNavClass('/Kasa/')}>
-					<Link className='nav-list-li__item nav-list-li__item--home' to='/Kasa/'>
-						Accueil
-					</Link>
-				</li>
-				<li className={getNavClass('/about')}>
-					<Link className='nav-list-li__item' to='/about'>
-						A propos
-					</Link>
-				</li>
+				{navLinks.map((link, index) => (
+					<li key={index}>
+						<Link to={link.path} className={`nav-list__item ${activeLink === link.path ? 'nav-list__item--active' : ''}`}>
+							{link.name}
+						</Link>
+					</li>
+				))}
 			</ul>
+			{/* <ul className='test'>
+				<li>
+					<Link className='test__font--1'>Home--1</Link>
+					<Link className='test__font--2'>About--2</Link>
+				</li>
+			</ul> */}
 		</nav>
 	);
 }
+
+export default Navbar;
