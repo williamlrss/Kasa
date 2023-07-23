@@ -1,30 +1,43 @@
 import './slider.scss';
-import ArrowRight from '../../assets/chevron_carousel_right.png';
-import ArrowLeft from '../../assets/chevron_carousel_left.png';
+import { ReactComponent as ArrowLeft } from '../../assets/chevron_slider_left.svg';
+import { ReactComponent as ArrowRight } from '../../assets/chevron_slider_right.svg';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function Slider({ imageSlider }) {
+function Slider({ imageSlider, imageAlt }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const nextSlide = () => {
+		// For 5 slides, index 0 to 4 => ( ( 4 + 1 ) = 5 ) % 5
+		// --> remainder is 0 --> set current index to 0
 		setCurrentIndex((currentIndex + 1) % imageSlider.length);
 	};
 
 	const prevSlide = () => {
+		// For 5 slides, index 0 to 4 => ( ( 0 - 1 ) + 5 = 4 ) % 5
+		// --> remainder is 4 --> set current index to 4
 		setCurrentIndex((currentIndex - 1 + imageSlider.length) % imageSlider.length);
 	};
 
 	return (
-		<section style={{ backgroundImage: `url(${imageSlider[currentIndex]})` }} className='slider'>
+		<div className='slider'>
+			<img src={imageSlider[currentIndex]} className='slider__image' alt={`${imageAlt.replace(/ /g, '_')}_slider_image`} />
 			{imageSlider.length > 1 && (
 				<>
-					<img className='slider__arrow slider__arrow--backward' src={ArrowLeft} alt='icon_arrow_backward' onClick={prevSlide} />
-					<img className='slider__arrow slider__arrow--forward' src={ArrowRight} alt='icon_arrow_forward' onClick={nextSlide} />
+					<ArrowLeft className='slider__arrow slider__arrow--backward' aria-label='Previous slide' onClick={prevSlide} />
+					<ArrowRight className='slider__arrow slider__arrow--forward' aria-label='Next slide' onClick={nextSlide} />
 					<p className='slideCount'>
 						{currentIndex + 1} / {imageSlider.length}
 					</p>
 				</>
 			)}
-		</section>
+		</div>
 	);
 }
+
+Slider.propTypes = {
+	imageSlider: PropTypes.arrayOf(PropTypes.string).isRequired,
+	imageAlt: PropTypes.string.isRequired,
+};
+
+export default Slider;

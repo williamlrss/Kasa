@@ -1,10 +1,24 @@
 @import '../../sass/main.scss';
 
+/* Introducing magic formula
+Goodbye '@media screen' breakpoints
+
+		calc(--px + -vw)
+
+From smallest screen size to max screen view
+First value is the starting point
+Second value is the screen view addition
+
+		works with all rules
+		font-sizes / paddings / margins / widths x heights / ...
+
+Resulting to --> 95% less breakpoints */
+
 .nav-list {
 	height: 100%;
 	display: flex;
 	align-items: center;
-	gap: calc(10px + 2vw);
+	gap: calc(5px + 4vw);
 
 	&__item {
 		position: relative;
@@ -42,13 +56,3 @@
 		}
 	}
 }
-
-// .test__font {
-// 	&--1 {
-// 		font-size: 12px;
-// 	}
-
-// 	&--2 {
-// 		font-size: 24px;
-// 	}
-// }

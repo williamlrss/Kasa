@@ -1,7 +1,7 @@
 @import '../../sass/main.scss';
 
 .notFound {
-	height: 100vh;
+	height: 90vh;
 	@include flex(column, space-evenly);
 
 	&-heading {
@@ -25,12 +25,4 @@
 		text-align: center;
 		text-decoration: underline;
 	}
-}
-
-notfound-page {
-	@extend .notFound;
-}
-
-notfound-heading {
-	@extend .notFound-heading;
 }

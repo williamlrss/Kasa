@@ -1,30 +1,49 @@
 @import '../../sass/main.scss';
 
+/* Introducing magic formula
+Goodbye '@media screen' breakpoints
+
+		calc(--px + -vw)
+
+From smallest screen size to max screen view
+First value is the starting point
+Second value is the screen view addition
+
+		works with all rules
+		font-sizes / paddings / margins / widths x heights / ...
+
+Resulting to --> 95% less breakpoints */
+
 .slider {
+	user-select: none;
 	position: relative;
-	@include flex(row, space-between);
+	@include flex();
 	aspect-ratio: 4/3;
 	border-radius: 25px;
-	background-position: center;
-	background-size: cover;
+	transition: 0.2s;
+
+	@media screen and (min-width: 600px) {
+		aspect-ratio: 6/3;
+	}
 
 	@media screen and (min-width: 900px) {
 		aspect-ratio: 3/1;
 	}
 
+	&__image {
+		position: absolute;
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+		border-radius: 25px;
+	}
+
 	&__arrow {
-		position: relative;
-		width: 20px;
+		position: absolute;
+		height: calc(20px + 3vw);
 		cursor: pointer;
 		transition: 0.1s;
 
-		@media screen and (min-width: 768px) {
-			width: 30px;
-		}
-
-		@media screen and (min-width: 900px) {
-			width: inherit;
-		}
 		&:hover {
 			filter: drop-shadow(0 4px 1px $main-color);
 		}
@@ -34,19 +53,20 @@
 		}
 
 		&--backward {
-			left: 25px;
+			left: 10px;
 			transition-duration: 0.4s;
 
 			&:active {
-				left: 20px;
+				left: 5px;
 			}
 		}
+
 		&--forward {
-			right: 25px;
+			right: 10px;
 			transition-duration: 0.4s;
 
 			&:active {
-				right: 20px;
+				right: 5px;
 			}
 		}
 	}
@@ -54,17 +74,13 @@
 	.slideCount {
 		position: absolute;
 		left: 50%;
-		bottom: 10px;
+		bottom: calc(10px + 1vw);
 		color: white;
-		font-size: clamp(0.5em, 1vw, 1vw);
+		font-size: calc(12px + 0.6vw);
 		letter-spacing: -1px;
 
-		@media screen and (min-width: 768px) {
-			bottom: 20px;
-		}
-
-		@media screen and (min-width: 900px) {
-			bottom: 25px;
+		@media screen and (max-width: 600px) {
+			display: none;
 		}
 	}
 }

@@ -1,11 +1,30 @@
 @import '../../sass/main.scss';
 
+/* Introducing magic formula
+Goodbye '@media screen' breakpoints
+
+		calc(--px + -vw)
+
+From smallest screen size to max screen view
+First value is the starting point
+Second value is the screen view addition
+
+		works with all rules
+		font-sizes / paddings / margins / widths x heights / ...
+
+Resulting to --> 95% less breakpoints */
+
 .about {
 	@include flex(column);
 	gap: 20px;
 	margin-bottom: 30px;
 
-	@media screen and (min-width: 900px) {
-		margin-inline: 6%;
+	&-content {
+		@include flex(column);
+		gap: calc(15px + 1.5vh);
+
+		@media screen and (min-width: 900px) {
+			margin-inline: 6%;
+		}
 	}
 }

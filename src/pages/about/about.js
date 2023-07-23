@@ -1,7 +1,7 @@
 import './about.scss';
 import { useState, useEffect } from 'react';
 import Banner from '../../components/banner/banner';
-import DropDownEl from '../../components/dropDownEl/dropDownEl';
+import Collapse from '../../components/collapse/collapse';
 
 export default function About() {
 	const [aboutDatas, setAboutDatas] = useState([]);
@@ -9,7 +9,7 @@ export default function About() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch('http://localhost:3000/about.json')
+		fetch(process.env.REACT_APP_DATA_ABOUT)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
@@ -35,13 +35,13 @@ export default function About() {
 	}
 
 	return (
-		<>
-			<main className='about main-pages'>
-				<Banner />
-				{aboutDatas.map((data) => {
-					return <DropDownEl key={data.id} title={data.title} content={[`${data.content}`]} />;
-				})}
-			</main>
-		</>
+		<main className='about main-pages'>
+			<Banner />
+			<div className='about-content'>
+				{aboutDatas.map((data) => (
+					<Collapse key={data.id} title={data.title} content={data.content} />
+				))}
+			</div>
+		</main>
 	);
 }

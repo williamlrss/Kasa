@@ -1,0 +1,63 @@
+@import '../../sass/main.scss';
+
+/* Introducing magic formula
+Goodbye '@media screen' breakpoints
+
+		calc(--px + -vw)
+
+From smallest screen size to max screen view
+First value is the starting point
+Second value is the screen view addition
+
+		works with all rules
+		font-sizes / paddings / margins / widths x heights / ...
+
+Resulting to --> 95% less breakpoints */
+
+.collapse {
+	background-color: $main-grey;
+	width: 100%;
+	border-radius: 0 0 10px 10px;
+
+	&__button {
+		cursor: pointer;
+		background-color: $main-color;
+		border-radius: 5px;
+		color: white;
+		@include flex(row, space-between);
+		width: 100%;
+		padding: calc(5px + 0.5vw) calc(10px + 0.5vw);
+
+		&-title {
+			font-size: calc(13px + 0.390625vw);
+		}
+
+		&-arrow {
+			transition: all 0.2s ease-in-out;
+		}
+	}
+
+	&__content {
+		padding: calc(20px + 0.5vw) calc(10px + 0.390625vw) calc(50px + 0.390625vw) calc(10px + 0.390625vw);
+		visibility: visible;
+		opacity: 1;
+		height: auto;
+		transition: 0.2s ease-in-out;
+
+		@media screen and (min-width: 900px) {
+			padding: calc(20px + 0.5vw) calc(10px + 0.390625vw) calc(10px + 0.390625vw) calc(10px + 0.390625vw);
+		}
+
+		&--hidden {
+			visibility: hidden;
+			opacity: 0;
+			height: 0;
+			transition: 0.2s ease-out;
+		}
+
+		&-text {
+			color: $main-color;
+			line-height: calc(16px + 0.5vw);
+		}
+	}
+}

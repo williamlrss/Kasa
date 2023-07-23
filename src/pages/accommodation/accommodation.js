@@ -1,20 +1,22 @@
 import './accommodation.scss';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Redirecting from '../../utils/redirecting/redirecting';
 import Slider from '../../components/slider/slider';
-import DropDownEl from '../../components/dropDownEl/dropDownEl';
+import Collapse from '../../components/collapse/collapse';
 import { ReactComponent as GreyStar } from '../../assets/grey_star.svg';
 import { ReactComponent as RedStar } from '../../assets/red_star.svg';
 
 export default function Accommodation() {
+	const navigate = useNavigate();
 	const [dataCurrentAccommodation, setDataCurrentAccommodation] = useState({});
-	const [error, setError] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
 
 	const { id: idAccommodation } = useParams();
-	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch('http://localhost:3000/accommodation.json')
+		fetch(process.env.REACT_APP_DATA_ACCOMMODATION)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
@@ -22,104 +24,88 @@ export default function Accommodation() {
 				return response.json();
 			})
 			.then((data) => {
-				const currentAccommodation = data.find((data) => data.id === idAccommodation);
+				const currentAccommodation = data.find((data) => String(data.id) === idAccommodation);
 				if (currentAccommodation) {
 					setDataCurrentAccommodation(currentAccommodation);
+					setIsLoading(false);
 				} else {
-					setError(true);
+					setError('No such accommodation found');
+					setTimeout(() => {
+						navigate('/', {});
+					}, 2000);
 				}
+				setIsLoading(false);
 			})
 			.catch((error) => {
-				console.error(`Fetch error: ${error}`);
-				setError(true);
+				setError('Fetch error: ' + error.message);
+				setIsLoading(false);
 			});
-	}, [idAccommodation]);
+	}, [idAccommodation, navigate]);
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 
 	if (error) {
-		navigate('*');
+		return (
+			<>
+				<p style={{ fontSize: 'calc(10px + 2vmin)', color: 'red' }}>Sorry : {error}</p>
+				<Redirecting />
+			</>
+		);
 	}
-	// if (!dataCurrentAccommodation.host) {
-	// 	return null;
-	// 	// return <NotFound />;
-	// }
 
 	const name = dataCurrentAccommodation.host.name.split(' ');
 	const rating = dataCurrentAccommodation.rating;
 	const description = dataCurrentAccommodation.description;
 	const equipments = dataCurrentAccommodation.equipments;
+
 	return (
-		<div className='main-pages'>
-			<Slider imageSlider={dataCurrentAccommodation.pictures || []} />
+		<main className='accommodation-page'>
+			<Slider imageSlider={dataCurrentAccommodation.pictures || []} imageAlt={dataCurrentAccommodation.title} />
 			<article className='content'>
-				<div className='content-heading'>
-					<h1 className='content-heading__title'>{dataCurrentAccommodation.title}</h1>
-					<p className='content-heading__location'>{dataCurrentAccommodation.location}</p>
-					<div className='content-heading-tags'>
+				<accommodation-heading className='accommodation-heading'>
+					<h1 className='accommodation-heading__title'>{dataCurrentAccommodation.title}</h1>
+					<p className='accommodation-heading__location'>{dataCurrentAccommodation.location}</p>
+					<div className='accommodation-heading-tags'>
 						{dataCurrentAccommodation.tags.map((tag, index) => {
 							return (
-								<button className='content-heading-tags__item' key={index}>
+								<button className='accommodation-heading-tags__item' key={index}>
 									{tag}
 								</button>
 							);
 						})}
 					</div>
-				</div>
-				<div className='content-aside'>
-					<div className='content-aside-rating'>
+				</accommodation-heading>
+				<host-and-rating className='host-and-rating'>
+					<div className='host-and-rating__rating'>
 						{[...Array(5)].map((star, index) => {
 							const ratingValue = index + 1;
 							return (
-								<div className='content-aside-rating__item' data-key={index}>
+								<div className='host-and-rating__rating__item' key={index}>
 									{ratingValue <= rating ? <RedStar /> : <GreyStar />}
 								</div>
 							);
 						})}
 					</div>
-					<div className='content-aside-host'>
-						<div className='content-aside-host-name'>
-							<p className='content-aside-host-name__text'>{name[0]}</p>
-							<p className='content-aside-host-name__text'>{name[1]}</p>
-						</div>
-						<img className='content-aside-host__picture' src={dataCurrentAccommodation.host.picture} alt='host_profile_picture' />
-					</div>
-				</div>
+					<figure className='host-and-rating__host'>
+						<figcaption className='host-and-rating__host-name'>
+							<p className='host-and-rating__host-name__text'>{name[0]}</p>
+							<p className='host-and-rating__host-name__text'>{name[1]}</p>
+						</figcaption>
+						<img className='host-and-rating__host__picture' src={dataCurrentAccommodation.host.picture} alt='host_profile_picture' />
+					</figure>
+				</host-and-rating>
 			</article>
-			<div className='content-dropDownEls'>
-				<DropDownEl title={'Description'} content={[`${description}`]} />
-				<DropDownEl title={'Équipements'} content={equipments} />
+			<div className='content-collapse'>
+				<Collapse title={'Description'} content={description} />
+				<Collapse
+					title={'Équipements'}
+					content={equipments.map((equipment, index) => (
+						<p key={index}>{equipment}</p>
+					))}
+				/>
 			</div>
-		</div>
+		</main>
 	);
 }
-
-/* <main className='main-pages'>
-  <Slider imageSlider={dataCurrentAccommodation.pictures || []} />
-  <article className='content'>
-    <header className='content-heading'>
-      <h1 className='content-heading__title'>{dataCurrentAccommodation.title}</h1>
-      <p className='content-heading__location'>{dataCurrentAccommodation.location}</p>
-      <div className='content-heading-tags'>
-        {dataCurrentAccommodation.tags.map((tag, index) => (
-          <button className='content-heading-tags__item' key={index}>
-            {tag}
-          </button>
-        ))}
-      </div>
-    </header>
-    <aside className='content-aside'>
-      <RatingStar rating={rating} />
-      <figure className='content-aside-host'>
-        <figcaption className='content-aside-host-name'>
-          <p className='content-aside-host-name__text'>{name[0]}</p>
-          <p className='content-aside-host-name__text'>{name[1]}</p>
-        </figcaption>
-        <img className='content-aside-host__picture' src={dataCurrentAccommodation.host.picture} alt='host_profile_picture' />
-      </figure>
-    </aside>
-  </article>
-  <div className='content-dropDownEls'>
-    <DropDownEl title={'Description'} content={[`${description}`]} />
-    <DropDownEl title={'Équipements'} content={equipments} />
-  </div>
-</main>
-<Footer /> */

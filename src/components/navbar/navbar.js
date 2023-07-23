@@ -8,7 +8,7 @@ function Navbar() {
 
 	const navLinks = [
 		{ name: 'Home', path: '/kasa' },
-		{ name: 'About', path: '/about' },
+		{ name: 'À propos', path: '/about' },
 	];
 
 	useEffect(() => {
@@ -18,20 +18,14 @@ function Navbar() {
 	return (
 		<nav>
 			<ul className='nav-list'>
-				{navLinks.map((link, index) => (
-					<li key={index}>
+				{navLinks.map((link) => (
+					<li key={link.path}>
 						<Link to={link.path} className={`nav-list__item ${activeLink === link.path ? 'nav-list__item--active' : ''}`}>
 							{link.name}
 						</Link>
 					</li>
 				))}
 			</ul>
-			{/* <ul className='test'>
-				<li>
-					<Link className='test__font--1'>Home--1</Link>
-					<Link className='test__font--2'>About--2</Link>
-				</li>
-			</ul> */}
 		</nav>
 	);
 }

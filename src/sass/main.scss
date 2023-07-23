@@ -15,18 +15,12 @@ Second value is the screen view addition
 		works with all rules
 		font-sizes / paddings / margins / widths x heights / ...
 
-Resulting to --> not a single one breakpoint in the application */
+Resulting to --> 95% less breakpoints */
 
-.main {
-	// display: flex;
-	// flex-direction: column;
-	// gap: calc(10px + 2vw);
-
-	&-pages {
-		display: flex;
-		flex-direction: column;
-		gap: calc(20px + 2vw);
-	}
+.main-pages {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
 }
 
 a,
