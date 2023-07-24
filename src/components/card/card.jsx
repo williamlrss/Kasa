@@ -6,7 +6,7 @@ import './card.scss';
 const Card = ({ id, title, cover, altText }) => {
 	return (
 		<Link to={`/accommodation/${id}`} className='card'>
-			<img className='card__img' src={cover} alt={altText ? altText : title} />
+			<img className='card__img' src={cover} alt={altText ? `${altText.replace(/ /g, '_')}` : `${title.replace(/ /g, '_')}`} />
 			{title && <h3 className='card__title'>{title}</h3>}
 		</Link>
 	);
@@ -14,7 +14,7 @@ const Card = ({ id, title, cover, altText }) => {
 
 Card.propTypes = {
 	id: PropTypes.string.isRequired,
-	title: PropTypes.string,
+	title: PropTypes.string.isRequired,
 	cover: PropTypes.string.isRequired,
 	altText: PropTypes.string,
 };

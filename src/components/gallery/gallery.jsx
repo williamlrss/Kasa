@@ -1,6 +1,6 @@
 import './gallery.scss';
 import React, { useState, useEffect } from 'react';
-import Card from './../card/card';
+import Card from '../card/card';
 
 const Gallery = () => {
 	const [accommodations, setAccommodations] = useState([]);
