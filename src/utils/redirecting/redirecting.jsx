@@ -4,7 +4,7 @@ export default function Redirecting() {
 	return (
 		<>
 			<p class='redirecting'>
-				Redirecting<span>.</span>
+				Redirection en cours<span>.</span>
 				<span>.</span>
 				<span>.</span>
 			</p>

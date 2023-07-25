@@ -1,11 +1,11 @@
 import './accommodation.scss';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Redirecting from '../../utils/redirecting/redirecting';
 import Slider from '../../components/slider/slider';
 import Collapse from '../../components/collapse/collapse';
 import { ReactComponent as GreyStar } from '../../assets/grey_star.svg';
 import { ReactComponent as RedStar } from '../../assets/red_star.svg';
+import NotFound from '../notFound/notFound';
 
 export default function Accommodation() {
 	const navigate = useNavigate();
@@ -29,10 +29,7 @@ export default function Accommodation() {
 					setDataCurrentAccommodation(currentAccommodation);
 					setIsLoading(false);
 				} else {
-					setError('No such accommodation found');
-					setTimeout(() => {
-						navigate('/', {});
-					}, 2000);
+					setError(true);
 				}
 				setIsLoading(false);
 			})
@@ -47,12 +44,7 @@ export default function Accommodation() {
 	}
 
 	if (error) {
-		return (
-			<>
-				<p style={{ fontSize: 'calc(10px + 2vmin)', color: 'red' }}>Sorry : {error}</p>
-				<Redirecting />
-			</>
-		);
+		return <NotFound />;
 	}
 
 	const name = dataCurrentAccommodation.host.name.split(' ');
