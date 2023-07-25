@@ -9,7 +9,11 @@ export default function About() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch(process.env.REACT_APP_DATA_ABOUT)
+		fetch(process.env.REACT_APP_DATA_ABOUT, {
+			headers: {
+				Accept: 'application/json',
+			},
+		})
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');

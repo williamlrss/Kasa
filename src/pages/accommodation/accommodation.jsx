@@ -16,7 +16,11 @@ export default function Accommodation() {
 	const { id: idAccommodation } = useParams();
 
 	useEffect(() => {
-		fetch(process.env.REACT_APP_DATA_ACCOMMODATION)
+		fetch(process.env.REACT_APP_DATA_ACCOMMODATION, {
+			headers: {
+				Accept: 'application/json',
+			},
+		})
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
