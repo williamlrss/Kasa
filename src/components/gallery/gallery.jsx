@@ -30,6 +30,7 @@ const Gallery = () => {
 	}
 
 	if (error) {
+		console.log(error);
 		return <div>{error}</div>;
 	}
 
