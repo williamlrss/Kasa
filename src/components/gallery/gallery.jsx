@@ -8,7 +8,7 @@ const Gallery = () => {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch('http://localhost:3000/accommodation.json')
+		fetch(process.env.REACT_APP_DATA_ACCOMMODATION)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
