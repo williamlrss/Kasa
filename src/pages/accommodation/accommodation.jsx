@@ -5,7 +5,6 @@ import Slider from '../../components/slider/slider';
 import Collapse from '../../components/collapse/collapse';
 import { ReactComponent as GreyStar } from '../../assets/grey_star.svg';
 import { ReactComponent as RedStar } from '../../assets/red_star.svg';
-import NotFound from '../notFound/notFound';
 
 export default function Accommodation() {
 	const navigate = useNavigate();
@@ -16,31 +15,38 @@ export default function Accommodation() {
 	const { id: idAccommodation } = useParams();
 
 	useEffect(() => {
-		fetch(process.env.REACT_APP_DATA_ACCOMMODATION, {
-			headers: {
-				Accept: 'application/json',
-			},
-		})
-			.then((response) => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch(process.env.REACT_APP_DATA_ACCOMMODATION, {
+					headers: {
+						Accept: 'application/json',
+					},
+				});
+
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				return response.json();
-			})
-			.then((data) => {
+
+				const data = await response.json();
 				const currentAccommodation = data.find((data) => String(data.id) === idAccommodation);
+
 				if (currentAccommodation) {
 					setDataCurrentAccommodation(currentAccommodation);
-					setIsLoading(false);
 				} else {
-					setError(true);
+					throw new Error('Accommodation not found');
 				}
+			} catch (error) {
+				if (error.message === 'Accommodation not found') {
+					navigate('/404');
+				} else {
+					setError('Fetch error: ' + error.message);
+				}
+			} finally {
 				setIsLoading(false);
-			})
-			.catch((error) => {
-				setError('Fetch error: ' + error.message);
-				setIsLoading(false);
-			});
+			}
+		};
+
+		fetchData();
 	}, [idAccommodation, navigate]);
 
 	if (isLoading) {
@@ -48,7 +54,7 @@ export default function Accommodation() {
 	}
 
 	if (error) {
-		return <NotFound />;
+		return <h1>Oops! Something went wrong, please try again later.</h1>;
 	}
 
 	const name = dataCurrentAccommodation.host.name.split(' ');

@@ -9,25 +9,26 @@ export default function About() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch(process.env.REACT_APP_DATA_ABOUT, {
-			headers: {
-				Accept: 'application/json',
-			},
-		})
-			.then((response) => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch(process.env.REACT_APP_DATA_ABOUT, {
+					headers: {
+						Accept: 'application/json',
+					},
+				});
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				return response.json();
-			})
-			.then((data) => {
+				const data = await response.json();
 				setAboutDatas(data);
 				setIsLoading(false);
-			})
-			.catch((error) => {
+			} catch (error) {
 				setError(error.message);
 				setIsLoading(false);
-			});
+			}
+		};
+
+		fetchData();
 	}, []);
 
 	if (isLoading) {
@@ -35,7 +36,7 @@ export default function About() {
 	}
 
 	if (error) {
-		return <div>Error: {error}</div>;
+		return <h1>Oops! Something went wrong, please try again later.</h1>;
 	}
 
 	return (

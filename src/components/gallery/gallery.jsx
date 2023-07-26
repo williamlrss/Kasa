@@ -5,28 +5,43 @@ import Card from '../card/card';
 const Gallery = () => {
 	const [accommodations, setAccommodations] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		fetch(process.env.REACT_APP_DATA_ACCOMMODATION, {
-			headers: {
-				Accept: 'application/json',
-			},
-		})
-			.then((response) => {
+		let isMounted = true;
+
+		const fetchData = async () => {
+			try {
+				const response = await fetch(process.env.REACT_APP_DATA_ACCOMMODATION, {
+					headers: {
+						Accept: 'application/json',
+					},
+				});
+
 				if (!response.ok) {
-					throw new Error('Network response was not ok');
+					throw new Error(`Network response was not ok, status: ${response.status}`);
 				}
-				return response.json();
-			})
-			.then((data) => {
-				setAccommodations(data);
-				setIsLoading(false);
-			})
-			.catch((error) => {
-				setError(`Fetch error: ${error}`);
-				setIsLoading(false);
-			});
+
+				const data = await response.json();
+
+				if (isMounted) {
+					setAccommodations(data);
+					setIsLoading(false);
+				}
+			} catch (error) {
+				console.error(`Fetch error: ${error.message}`); // log the error for debugging
+				if (isMounted) {
+					setError(true);
+					setIsLoading(false);
+				}
+			}
+		};
+
+		fetchData();
+
+		return () => {
+			isMounted = false;
+		};
 	}, []);
 
 	if (isLoading) {
@@ -34,8 +49,7 @@ const Gallery = () => {
 	}
 
 	if (error) {
-		console.log(error);
-		return <div>{error}</div>;
+		return <h1>Oops! Something went wrong, please try again later.</h1>;
 	}
 
 	return (

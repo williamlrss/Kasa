@@ -1,34 +1,23 @@
 import React from 'react';
 
-// Post Prod Error Boundary file
-
 class ErrorBoundary extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { hasError: false };
 	}
 
-	static getDerivedStateFromError(error) {
-		// Update state so the next render will show the fallback UI.
+	static getDerivedStateFromError() {
 		return { hasError: true };
 	}
 
 	componentDidCatch(error, errorInfo) {
-		// You can also log the error to an error reporting service
 		console.log(error, errorInfo);
 	}
 
-	unhandeledrejection = (error) => {
-		console.log(error);
-		this.setState({ hasError: true });
-	};
-
 	render() {
 		if (this.state.hasError) {
-			// You can render any custom fallback UI
-			return <h1>Something went wrong.</h1>;
+			return <h1>Please run the server on port 3000.</h1>;
 		}
-
 		return this.props.children;
 	}
 }
