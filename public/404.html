@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Redirecting</title>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				// An array of all valid paths in your app
+				var validPaths = ['/', '/Kasa', '/accommodation/:id', '/about', '/404'];
+
+				// Get the current path
+				var path = window.location.pathname;
+
+				// Check if the current path exists in your app
+				var isValidPath = validPaths.includes(path);
+
+				// If it's a valid path, redirect to it
+				// If it's not a valid path, redirect to /404
+				if (isValidPath) {
+					window.location.href = path;
+				} else {
+					window.location.href = '/404';
+				}
+			});
+		</script>
+	</head>
+	<body></body>
+</html>

@@ -54,7 +54,7 @@ export default function Accommodation() {
 	}
 
 	if (error) {
-		return <h1>Oops! Something went wrong, please try again later.</h1>;
+		return <h1>Please run the server on port 3000.</h1>;
 	}
 
 	const name = dataCurrentAccommodation.host.name.split(' ');
