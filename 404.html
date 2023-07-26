@@ -1,1 +1,28 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/kasa/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/kasa/logo192.png"/><link rel="manifest" href="/kasa/manifest.json"/><title>Kasa</title><script defer="defer" src="/kasa/static/js/main.7de2080a.js"></script><link href="/kasa/static/css/main.18d47bf6.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Redirecting</title>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				// An array of all valid paths in your app
+				var validPaths = ['/', '/Kasa', '/accommodation/:id', '/about', '/404'];
+
+				// Get the current path
+				var path = window.location.pathname;
+
+				// Check if the current path exists in your app
+				var isValidPath = validPaths.includes(path);
+
+				// If it's a valid path, redirect to it
+				// If it's not a valid path, redirect to /404
+				if (isValidPath) {
+					window.location.href = path;
+				} else {
+					window.location.href = '/404';
+				}
+			});
+		</script>
+	</head>
+	<body></body>
+</html>
